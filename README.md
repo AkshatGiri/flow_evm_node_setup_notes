@@ -67,10 +67,16 @@ image versions can be found [here](https://console.cloud.google.com/artifacts/do
 
 ### Running the Flow EVM node
 
+Get the IMAGE_ID
+
+```
+docker images
+```
+
 The following command runs the node in index only mode which means you won't need to any gas in the coa account and will not accrue any fees in the coinbase account. You can remove the `--index-only` flag if you wish to process transactions.
 
 ```bash
-docker run -d -p 8545:8545 3af7021f0d91 \
+docker run -d -p 8545:8545 {IMAGE_ID} \
 --access-node-grpc-host=access.mainnet.nodes.onflow.org:9000 \
 --access-node-spork-hosts=access-001.mainnet25.nodes.onflow.org:9000 \
 --flow-network-id=flow-mainnet \
