@@ -89,6 +89,25 @@ docker run -d -p 8545:8545 {IMAGE_ID} \
 --index-only
 ```
 
+OR if this is a private node you can run the following and disable most of the rate limits.
+
+```bash
+docker run -d -p 8545:8545 -p 8080:8080 -p 6060:6060 {IMAGE_ID} \
+--access-node-grpc-host=access.mainnet.nodes.onflow.org:9000 \
+--access-node-spork-hosts=access-001.mainnet25.nodes.onflow.org:9000 \
+--flow-network-id=flow-mainnet \
+--init-cadence-height=85981135 \
+--ws-enabled=true \
+--coinbase={FLOW_EVM_ACCOUNT_WITHOUT_0x} \
+--coa-address={CADENCE_ACCOUNT_WITHOUT_0x} \
+--coa-key={CADENCE_ACCOUNT_PRIVATE_KEY_WITHOUT_0x} \
+--gas-price=100 \
+--rate-limit=0 \
+--stream-limit=0 \
+--stream-timeout=60 \
+--filter-expiry=0
+```
+
 ### Check the logs
 
 ```bash
@@ -123,3 +142,8 @@ Then you can run it with
 
 - https://developers.flow.com/networks/node-ops/access-onchain-data/evm-gateway/evm-gateway-setup
 - https://github.com/onflow/flow-evm-gateway
+
+## TODOs
+
+- Expose rpc to the internet.
+  - There are a few ways to do this. Using ngnix, opening an ssh tunnel, cady, reverse proxy etc. For my personal use I've used an ssh tunnel and connected the pulic port directly to the container port. Probably not the right way to do this for production but works for my use case. Not sure what's the recommended way to do this. Since we're also trying to support websocket connections I'm not sure what method provides the least overhead and easies setup / maintainability.
