@@ -76,22 +76,7 @@ docker images
 The following command runs the node in index only mode which means you won't need to any gas in the coa account and will not accrue any fees in the coinbase account. You can remove the `--index-only` flag if you wish to process transactions.
 
 ```bash
-docker run -d -p 8545:8545 {IMAGE_ID} \
---access-node-grpc-host=access.mainnet.nodes.onflow.org:9000 \
---access-node-spork-hosts=access-001.mainnet25.nodes.onflow.org:9000 \
---flow-network-id=flow-mainnet \
---init-cadence-height=85981135 \
---ws-enabled=true \
---coinbase={FLOW_EVM_ACCOUNT_WITHOUT_0x} \
---coa-address={CADENCE_ACCOUNT_WITHOUT_0x} \
---coa-key={CADENCE_ACCOUNT_PRIVATE_KEY_WITHOUT_0x} \
---gas-price=100 \
---index-only
-```
 
-OR if this is a private node you can run the following and disable most of the rate limits.
-
-```bash
 docker run -d -p 8545:8545 -p 8080:8080 -p 6060:6060 {IMAGE_ID} \
 --access-node-grpc-host=access.mainnet.nodes.onflow.org:9000 \
 --access-node-spork-hosts=access-001.mainnet25.nodes.onflow.org:9000 \
@@ -102,10 +87,8 @@ docker run -d -p 8545:8545 -p 8080:8080 -p 6060:6060 {IMAGE_ID} \
 --coa-address={CADENCE_ACCOUNT_WITHOUT_0x} \
 --coa-key={CADENCE_ACCOUNT_PRIVATE_KEY_WITHOUT_0x} \
 --gas-price=100 \
---rate-limit=0 \
---stream-limit=0 \
---stream-timeout=60 \
---filter-expiry=0
+--rate-limit=9999999 \
+--index-only
 ```
 
 ### Check the logs
